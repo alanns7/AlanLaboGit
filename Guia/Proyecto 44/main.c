@@ -5,28 +5,31 @@ int main(int argc, char *argv[])
 {
   int numeros[c],i,j,aux;
   
-  for(i=0;i<c;i++)
+  /*for(i=0;i<c;i++)
   {
      numeros[i]=0;
-  }
+  }*/
   
   for(i=0;i<c;i++)
   {
-    printf("Ingrese numero");
+    printf("Ingrese numero\n");
     scanf("%d",&numeros[i]);
+    
     while(numeros[i]==0)
     {
        printf("Reingrese numero");
        scanf("%d",&numeros[i]);
     }
   }
+  //vector
   for(i=0;i<c;i++)
   {
-     printf("%d\n",numeros[i]);              
+     printf("Vector: %d\n",numeros[i]);              
   }
-  printf("\n")
+  printf("\n");
   
-   for(i=0;i<c-1;i++)
+  // numeros positivos
+   for(i=0;i<c;i++)
      for(j=i+1;j<c;j++)     
       {
          if(numeros[i]>0)
@@ -44,14 +47,15 @@ int main(int argc, char *argv[])
   {
     if(numeros[i]>0)
      {
-       printf("%d\n",numeros[i]);  
+       printf("Numeros positivos en forma decreciente%d\n",numeros[i]);  
      }            
   }
   
- printf("\n") 
+ printf("\n"); 
  
-   for(i=0;i<c-1;i++)
-     for(j=i+1;j<c;j++)     
+ // numeros negativos
+   for(i=0;i<c;i++)
+     {for(j=i+1;j<c;j++)     
       {
          if(numeros[i]<0)
          {
@@ -63,11 +67,12 @@ int main(int argc, char *argv[])
             }
          }            
        }
+      } 
 for(i=0;i<c;i++)
   {
     if(numeros[i]<0)
      {
-       printf("%d\n",numeros[i]);  
+       printf("Numeros negativos en forma creciente %d\n",numeros[i]);  
      }            
   }
   system("PAUSE");	
