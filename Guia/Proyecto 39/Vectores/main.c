@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
     char respuesta='s';
     
     
-    for(i=1;i<3;i++)
+    for(i=1;i<30;i++)
     {
     
             printf("Ingrese gasto en compra en dia %d\n",i);
@@ -30,15 +30,18 @@ int main(int argc, char *argv[])
                   fflush(stdin);
             }
             
-            if(inicial=0)
+            
+            if(inicial==0)
             {
              mayor[i]=compra[i];
+             pos_mayor=pos_mayor+i;
              inicial=1;
             }
             
             if (compra[i]>mayor[i])
                {   
                 mayor[i]=compra[i];
+                pos_mayor=0;
                 pos_mayor=pos_mayor+i;
                }
     }      
