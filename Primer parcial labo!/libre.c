@@ -22,7 +22,7 @@ void alta(int limite,int codigoLibro[], char titulo[][80], char autor[][50], int
  char aux_titulo[100], aux_autor[70];
  
  printf("\nALTA\n");
-
+ 
  do
  {
   printf("\nIngrese codigo de libro\n");
@@ -126,8 +126,8 @@ for(i=1;i<limite;i++)
   printf("Modificacion exitosa\n");
   
   break;
-    } 
-  }
+  } 
+ }
 }
 //NUEVA FUNCION (existe codigo)
 int existeCodigo(int aux_codigo, int codigo[], int limite)
@@ -138,7 +138,7 @@ int i;
  {
   if(aux_codigo==codigo[i])
   {  
-           return 1;
+     return 1;
   }
  }
  return 0;
@@ -146,7 +146,7 @@ int i;
 
 //NUEVA FUNCION(presta libros)
 
-void prestamo(int estadoLibro[], int aux_codigoLibro,int codigoLibro[], int codigoPrestado[],int limite)
+void prestamo(int estadoLibro[], int aux_codigoLibro,int codigoLibro[], int codigoPrestado[],int limite,long int aux_dni,long int dni[])
 {
    int i, inicial=0;
       
@@ -155,11 +155,25 @@ void prestamo(int estadoLibro[], int aux_codigoLibro,int codigoLibro[], int codi
      if(aux_codigoLibro==codigoLibro[i])
      {                                
         estadoLibro[i]=1;
-        codigoPrestado[i]=0;
         codigoPrestado[i]++;
-         
-        printf("\nCodigo %d PRESTADO\n",aux_codigoLibro);
-        break;
+        
+        if(codigoPrestado[i] < 100000)
+          {
+            while(aux_dni<0 || aux_dni>100000000)
+            {
+               printf("Error, reingrese dni\n");
+               scanf("%d",&aux_dni);
+               fflush(stdin);
+            }
+            dni[i]=aux_dni;
+            printf("\nCodigo %d PRESTADO\n",aux_codigoLibro);
+            break;
+          }
+        else
+            {
+               printf("Este libro alcanzo los 100000 prestamos, no se puede prestar\n");
+               break;
+            }
      }                                        
    } 
 }

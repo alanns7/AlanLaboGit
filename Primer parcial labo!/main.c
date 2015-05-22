@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
  char aux2[80];                                                  //1= prestado
  long int dni[MAXLIBROS];
  int opcion;
+ long int aux_dni;
  
     for(i=0;i<MAXLIBROS;i++)
     {
@@ -37,16 +38,18 @@ int main(int argc, char *argv[])
             printf("Ingrese codigo de libro a modificar\n");
             scanf("%d",&aux_codigoLibro);
             fflush(stdin);
+            
             while(existeCodigo(aux_codigoLibro, codigoLibro, MAXLIBROS)==0)
             { 
               printf("\n");
               printf("El codigo no existe, reingrese codigo\n");
               scanf("%d",&aux_codigoLibro);  
             }                   
+            
             if(existeCodigo(aux_codigoLibro, codigoLibro, MAXLIBROS)==1)
             { 
-            printf("El codigo existe\n");
-            modifica(MAXLIBROS,aux_codigoLibro,codigoLibro,titulo,autor);
+              printf("El codigo existe\n");
+              modifica(MAXLIBROS,aux_codigoLibro,codigoLibro,titulo,autor);
             }
             break;
             
@@ -80,13 +83,16 @@ int main(int argc, char *argv[])
              printf("\n");
              printf("Ingrese codigo de libro a prestar\n");
              scanf("%d",&aux_codigoLibro);
+             fflush(stdin);
+             printf("Ingrese DNI de persona a prestar\n");
+             scanf("%d",&aux_dni);
              while(existeCodigo(aux_codigoLibro, codigoLibro, MAXLIBROS)==0)
              {  
                 printf("Codigo no encontrado, reingrese\n");
                 scanf("%d",&aux_codigoLibro);   
              } 
              
-             prestamo(estadoLibro, aux_codigoLibro, codigoLibro, codigoPrestado, MAXLIBROS);
+             prestamo(estadoLibro, aux_codigoLibro, codigoLibro, codigoPrestado, MAXLIBROS, aux_dni, dni);
              cantPrestamo++;
              break;
             
@@ -102,13 +108,15 @@ int main(int argc, char *argv[])
                 scanf("%d",&aux_codigoLibro);;   
              } 
             
-             for(i=0;i<MAXLIBROS;i++)
+             for(i=1;i<MAXLIBROS;i++)
              {
                if(aux_codigoLibro==codigoLibro[i])
                {
-                 estadoLibro[i]=0;
-                 printf("Libro %d devuelto\n",codigoLibro[i]);
-                 break;
+                   estadoLibro[i]=0;
+                   dni[i]=0;
+                                  
+                   printf("Libro %d devuelto\n",codigoLibro[i]);
+                   break;
                }
              } 
              break;
@@ -139,17 +147,17 @@ int main(int argc, char *argv[])
                  }
                }
              } 
-              if(codigoPrestado[1]>0)
-              {
-                printf("Los datos de el/los libros mas prestados son:\n Codigo: %d\t\t Titulo: %s\t\t Autor: %s\n",codigoLibro[1],titulo[1],autor[1]); 
+             if(codigoPrestado[1]>0)
+             {
+               printf("Los datos de el/los libros mas prestados son:\n Codigo: %d\t\t Titulo: %s\t\t Autor: %s\n",codigoLibro[1],titulo[1],autor[1]); 
              
-                for(i=2;i<MAXLIBROS;i++)
-                {  
-                  if(codigoPrestado[1] == codigoPrestado[i])
-                  {                      
-                   printf("Codigo: %d\t\t Titulo %s\t\t Autor: %s\n",codigoPrestado[i],titulo[i],autor[i]);
-                  }
-                  break;
+               for(i=2;i<MAXLIBROS;i++)
+               {  
+                   if(codigoPrestado[1] == codigoPrestado[i])
+                    {                      
+                      printf("Codigo: %d\t\t Titulo %s\t\t Autor: %s\n",codigoPrestado[i],titulo[i],autor[i]);
+                    }
+                   break;
                }
              } 
              else
@@ -165,27 +173,27 @@ int main(int argc, char *argv[])
      
              for(i=1;i<MAXLIBROS-1;i++)
              {
-               for(j=i+1;j<MAXLIBROS;j++)
-               {
-                 if(strcmp(titulo[i],titulo[j])==1)
-                 {
-                    strcpy(aux2,titulo[i]);
-                    strcpy(titulo[i],titulo[j]);
-                    strcpy(titulo[j],aux2);
+                for(j=i+1;j<MAXLIBROS;j++)
+                {
+                   if(strcmp(titulo[i],titulo[j])==1)
+                   {
+                      strcpy(aux2,titulo[i]);
+                      strcpy(titulo[i],titulo[j]);
+                      strcpy(titulo[j],aux2);
                     
-                    aux=codigoLibro[i];
-                    codigoLibro[i]=codigoLibro[j];
-                    codigoLibro[j]=aux;
+                      aux=codigoLibro[i];
+                      codigoLibro[i]=codigoLibro[j];
+                      codigoLibro[j]=aux;
                    
-                    strcpy(aux2,autor[i]);
-                    strcpy(autor[i],autor[j]);
-                    strcpy(autor[j],aux2);
+                      strcpy(aux2,autor[i]);
+                      strcpy(autor[i],autor[j]);
+                      strcpy(autor[j],aux2);
                     
-                    aux=estadoLibro[i];
-                    estadoLibro[i]=estadoLibro[j];
-                    estadoLibro[j]=aux;
-                 }
-               }
+                      aux=estadoLibro[i];
+                      estadoLibro[i]=estadoLibro[j];
+                      estadoLibro[j]=aux;
+                   }
+                }
              }   
              
              printf("\n");
@@ -210,8 +218,10 @@ int main(int argc, char *argv[])
         
              break;           
        }   
+     
      opcion=opciones(); 
     }
+  
   system("PAUSE");	
   return 0;
 }
